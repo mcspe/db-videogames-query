@@ -75,7 +75,18 @@ Dopo aver testato le vostre query, riportatele in un file txt e caricatelo nella
 
 ##### BONUS
 11. Selezionare il numero e la media delle recensioni per il videogioco con ID = 412 (review number = 12, avg_rating = 3.16 circa)
+
+	SELECT count(r.id) review_number, avg(r.rating) avg_rating  
+	FROM reviews r 
+	WHERE r.videogame_id = 412;
+
 12. Selezionare il numero di videogame che la software house con ID = 1 ha rilasciato nel 2018 (13)
+
+	SELECT count(v.software_house_id) 
+	FROM videogames v 
+	WHERE v.software_house_id = 1
+		AND YEAR(v.release_date) = 2018;
+
 
 #### GROUP BY
 1. Contare quante software house ci sono per ogni paese (3)
