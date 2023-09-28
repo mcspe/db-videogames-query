@@ -282,3 +282,15 @@ Dopo aver testato le vostre query, riportatele in un file txt e caricatelo nella
 		ORDER BY c DESC) tb;
 
 13. Selezionare le categorie dei videogame i quali hanno una media recensioni inferiore a 2 (10)
+
+	SELECT DISTINCT c.id, c.name 
+	FROM categories c 
+	JOIN category_videogame cv 
+		ON cv.category_id = c.id 
+	JOIN (		SELECT v.id
+			FROM reviews r 
+			JOIN videogames v 
+				ON v.id = r.videogame_id 
+			GROUP BY v.id 
+			HAVING avg(r.rating) < 2) sq
+		ON sq.id = cv.videogame_id ;
