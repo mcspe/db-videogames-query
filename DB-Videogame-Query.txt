@@ -256,5 +256,29 @@ Dopo aver testato le vostre query, riportatele in un file txt e caricatelo nella
 				WHERE subV.release_date < now());
 
 11. Selezionare i dati del videogame (id, name, release_date, totale recensioni) con piÃ¹ recensioni (videogame id : potrebbe uscire 449 o 398, sono entrambi a 20)
+
+	SELECT vd.id, vd.name, vd.release_date, max(vd.reviews)
+	FROM (SELECT v.*, count(r.id) reviews
+		FROM videogames v 
+		JOIN reviews r
+			ON r.videogame_id = v.id
+		GROUP BY v.id
+		ORDER BY reviews DESC) vd;
+
 12. Selezionare la software house che ha vinto piÃ¹ premi tra il 2015 e il 2016 (software house id : potrebbe uscire 3 o 1, sono entrambi a 3)
+
+	SELECT tb.id, tb.name, max(tb.c)
+	FROM (SELECT sh2.id, sh2.name, count(a2.id) c
+		FROM software_houses sh2  
+		JOIN videogames v2 
+			ON v2.software_house_id = sh2.id 
+		JOIN award_videogame av2 
+			ON av2.videogame_id = v2.id 
+		JOIN awards a2 
+			ON a2.id = av2.award_id 
+		WHERE av2.`year` >= 2015
+			AND av2.`year` <= 2016
+		GROUP BY sh2.id
+		ORDER BY c DESC) tb;
+
 13. Selezionare le categorie dei videogame i quali hanno una media recensioni inferiore a 2 (10)
